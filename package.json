@@ -1,0 +1,8 @@
+{
+  "name": "Clicky-game",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/ekitaula/Clicky-game.git",
+  "author": "Eki <ekitaula@gmail.com>",
+  "license": "MIT"
+}
