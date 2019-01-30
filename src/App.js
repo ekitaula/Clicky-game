@@ -12,41 +12,34 @@ class App extends Component {
     score: 0,
     topScore: 0,
     feedback: "Click an image to begin!",
-    gameStatus: 0 //gameStatus: 0 => game in progresss, 1 => game won, 2 => game lost
+    gameStatus: 0
   };
 
   componentDidMount() {
     this.setState({
-      imageNames: this.shuffle(this.state.imageNames)
+      ImageNames: this.shuffle(this.state.ImageNames)
     }, () => {
       console.log("Shuffled the images on game start");
     });
   }
 
   handleClick = event => {
-    // console.log(event.target); // example output => <img class="col-md-3 col-sm-4 col-xs-12 pb-4 imageBlock" src="/static/media/alchemist.ce4808c0.png" alt="alchemist.png">
-    // console.log(event.target.alt); // example output => alchemist.png
     const clickedimageName = event.target.alt;
-    // console.log("The clicked image is: " + clickedImageFileName);
-    // console.log("state BEFORE: " + JSON.stringify(this.state));
-    const wasImageClickedBefore = this.imageClickedBefore(clickedimageName);
+    const wasImageClickedBefore = this.imageClickedBefore(clickedImageName);
     if (wasImageClickedBefore) {
       this.setState({
-        imageNames: this.shuffle(this.state.imageNames),
-        // imageFileNames: this.state.imageFileNames, //for debugging only
+        ImageNames: this.shuffle(this.state.ImageNames),
         clickedImages: [],
         score: 0,
         feedback: "Game Over! You Guessed The Same Image Twice!",
         gameStatus: 2
       }, () => {
-        // console.log("IF block state AFTER GAME OVER: " + JSON.stringify(this.state));
       });
     } else {
       let newScore = this.state.score + 1;
-      if (newScore === this.state.imageNames.length) {
+      if (newScore === this.state.ImageNames.length) {
         this.setState({
-        imageNames: this.shuffle(this.state.imageNames),
-        // imageFileNames: this.state.imageFileNames, //for debugging only
+        ImageNames: this.shuffle(this.state.ImageNames),
           clickedImages: [],
           score: 0,
           topScore: newScore,
@@ -55,11 +48,10 @@ class App extends Component {
           });
       } else {
         const clickedImagesCopy = this.state.clickedImages.slice();
-        clickedImagesCopy.push(clickedimageName);
+        clickedImagesCopy.push(clickedImageName);
         const newTopScore = (newScore > this.state.topScore) ? newScore : this.state.topScore;
         this.setState({
-        imageNames: this.shuffle(this.state.imageNames),
-        // imageFileNames: this.state.imageFileNames, //for debugging only
+        ImageNames: this.shuffle(this.state.ImageNames),
           clickedImages: clickedImagesCopy,
           score: newScore,
           topScore: newTopScore,
@@ -81,9 +73,6 @@ class App extends Component {
     return false;
   };
 
-  // Fisher-Yates (aka Knuth) Shuffle algorithm implementation to shuffle images to display in the UI
-  // Copied from stackoverflow post:
-  // https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
   shuffle = (array) => {
     var currentIndex = array.length, temporaryValue, randomIndex;
     // While there remain elements to shuffle...
